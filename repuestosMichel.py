@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import mysql.connector
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -61,11 +62,11 @@ def add_ventas():
         idventas = request.form['idventas']
         tipoventa = request.form['tipoventa']
         idempleados = request.form['idempleados']
-        fecha = request.form['fecha']
+        fecha = datetime.strptime(request.form['fecha'], '%Y-%m-%d').date()
         vproductos = request.form['vproductos']
         cur = mydb.cursor()
-        cur.execute('INSERT INTO ventas (idventas, ´tipo de venta´, fecha , productos, datos_empleados_idempleados) VALUES (%s ,%s, %s, %s, %s)',
-                    (idventas, tipoventa,fecha, vproductos ,idempleados))
+        cur.execute('INSERT INTO ventas (idventas, tipo_venta, fecha , productos, datos_empleados_idempleados) VALUES (%s ,%s, %s, %s, %s)',
+                    (idventas, tipoventa,idempleados, fecha ,vproductos))
         mydb.commit()
         return redirect(url_for('Index'))
     
@@ -155,13 +156,13 @@ def actualizar_venta(id):
         idventas = request.form['idventas']
         tipo = request.form['tipo']
         idempleados = request.form['idempleados']
-        fecha = request.form['fecha']
+        fecha = datetime.strptime(request.form['fecha'], '%Y-%m-%d').date()
         productos = request.form['productos']
         cur = mydb.cursor()
         cur.execute(""" 
     UPDATE ventas
     SET idventas = %s,
-        `tipo de venta` = %s,
+        tipo_venta = %s,
         fecha = %s,
         productos = %s
         datos_empleados_idempleados = %s,
