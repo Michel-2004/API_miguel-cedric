@@ -7,7 +7,7 @@ mydb = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
     password="contraseña123",
-    database="api"
+    database="mydb"
 )
 
 @app.route("/")
@@ -64,8 +64,8 @@ def add_ventas():
         fecha = request.form['fecha']
         vproductos = request.form['vproductos']
         cur = mydb.cursor()
-        cur.execute('INSERT INTO ventas (idventas, tipo de venta, idempleados, fecha , productos) VALUES (%s ,%s, %s, %s, %s)',
-                    (idventas, tipoventa, idempleados, fecha, vproductos))
+        cur.execute('INSERT INTO ventas (idventas, ´tipo de venta´, fecha , productos, datos_empleados_idempleados) VALUES (%s ,%s, %s, %s, %s)',
+                    (idventas, tipoventa,fecha, vproductos ,idempleados))
         mydb.commit()
         return redirect(url_for('Index'))
     
@@ -90,10 +90,82 @@ def borrar_ventas(id):
     mydb.commit()
     return redirect(url_for('Index'))
 
-@app.route('/editar_contacto/<string:id>')
-def editar_contacto():
+@app.route('/editar_empleados/<string:id>')
+def editar_empleados(id):
     cur = mydb.cursor()
-    cur.execute('SElECT * FROM empleados WHERE idempleados = {0}'.format(id))
+    cur.execute('SELECT * FROM datos_empleados WHERE idempleados = %s', (id,))
     datose = cur.fetchall()
-    
-    return redirect(url_for('editar-empleados', empleado = datose[0]))
+    return render_template('editar_empleados.html', contacto=datose[0])
+
+@app.route('/actualizar_empleados/<string:id>', methods=['POST'])
+def actualizar_empleados(id):
+    if request.method == 'POST':
+        idempleados = request.form['id']
+        nombre = request.form['nombre']
+        telefono = request.form['telefono']
+        correo = request.form['correo']
+        cur = mydb.cursor()
+        cur.execute(""" 
+            UPDATE datos_empleados
+            SET idempleados = %s,
+                nombre = %s,
+                telefono = %s,
+                correo = %s
+            WHERE idempleados = %s
+                    """, (idempleados, nombre, telefono, correo, id))
+        mydb.commit()
+    return redirect(url_for('Index'))
+
+@app.route('/editar_articulos/<string:id>')
+def editar_articulo(id):
+    cur = mydb.cursor()
+    cur.execute('SELECT * FROM productos WHERE idproductos = %s', (id,))
+    datosp = cur.fetchall()
+    return render_template('editar_articulo.html', articulos=datosp[0])
+
+@app.route('/actualizar_articulo/<string:id>', methods=['POST'])
+def actualizar_articulo(id):
+    if request.method == 'POST':
+        idprodutos = request.form['idproducto']
+        articulo = request.form['articulo']
+        cantidad = request.form['cantidad']
+        precio = request.form['precio']
+        cur = mydb.cursor()
+        cur.execute(""" 
+            UPDATE productos
+            SET idproductos = %s,
+                articulo = %s,
+                cantidad = %s,
+                precio = %s
+            WHERE idproductos = %s
+                    """, (idprodutos, articulo, cantidad, precio, id))
+        mydb.commit()
+    return redirect(url_for('Index'))
+
+@app.route('/editar_ventas/<string:id>')
+def editar_ventas(id):
+    cur = mydb.cursor()
+    cur.execute('SELECT * FROM ventas WHERE idventas = %s', (id,))
+    datosp = cur.fetchall()
+    return render_template('editar_venta.html', venta=datosp[0])
+
+@app.route('/actualizar_venta/<string:id>', methods=['POST'])
+def actualizar_venta(id):
+    if request.method == 'POST':
+        idventas = request.form['idventas']
+        tipo = request.form['tipo']
+        idempleados = request.form['idempleados']
+        fecha = request.form['fecha']
+        productos = request.form['productos']
+        cur = mydb.cursor()
+        cur.execute(""" 
+    UPDATE ventas
+    SET idventas = %s,
+        `tipo de venta` = %s,
+        fecha = %s,
+        productos = %s
+        datos_empleados_idempleados = %s,
+    WHERE idventas = %s
+            """, (idventas, tipo, idempleados, fecha, productos, id))
+        mydb.commit()
+    return redirect(url_for('Index'))

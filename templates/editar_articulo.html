@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <form action="/actualizar_articulo/{{articulos[0]}}" method="POST">
+            <input type="text" name="idproducto" placeholder="idproducto" value="{{ articulos[0] }}">
+            <input type="text" name="articulo" placeholder="articulo" value="{{ articulos[1] }}">
+            <input type="text" name="cantidad" placeholder="cantidad" value="{{ articulos[2] }}">
+            <input type="text" name="precio" placeholder="precio" value="{{ articulos[3] }}">
+            <button type="submit">Guardar</button>
+        </form>
+    </body>
+</html>

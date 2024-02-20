@@ -1,0 +1,66 @@
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`datos_empleados`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`datos_empleados` (
+  `idempleados` INT NOT NULL,
+  `nombre` VARCHAR(45) NULL,
+  `telefono` INT NULL,
+  `correo` VARCHAR(45) NULL,
+  PRIMARY KEY (`idempleados`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ventas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ventas` (
+  `idventas` INT NOT NULL,
+  `tipo_venta` VARCHAR(45) NULL, -- Cambio de "tipo de venta" a "tipo_venta"
+  `fecha` DATE NULL,
+  `productos` VARCHAR(45) NULL,
+  `datos_empleados_idempleados` INT NOT NULL,
+  PRIMARY KEY (`idventas`, `datos_empleados_idempleados`),
+  INDEX `fk_ventas_datos_empleados_idx` (`datos_empleados_idempleados` ASC) VISIBLE,
+  CONSTRAINT `fk_ventas_datos_empleados`
+    FOREIGN KEY (`datos_empleados_idempleados`)
+    REFERENCES `mydb`.`datos_empleados` (`idempleados`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+ 
+-- -----------------------------------------------------
+-- Table `mydb`.`productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`productos` (
+  `idproductos` INT NOT NULL,
+  `articulo` VARCHAR(45) NULL,
+  `cantidad` INT NULL,
+  `precio` VARCHAR(45) NULL,
+  PRIMARY KEY (`idproductos`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ventas_has_productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ventas_has_productos` (
+  `ventas_idventas` INT NOT NULL,
+  `ventas_datos_empleados_idempleados` INT NOT NULL,
+  `productos_idproductos` INT NOT NULL,
+  PRIMARY KEY (`ventas_idventas`, `ventas_datos_empleados_idempleados`, `productos_idproductos`),
+  INDEX `fk_ventas_has_productos_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
+  INDEX `fk_ventas_has_productos_ventas1_idx` (`ventas_idventas` ASC, `ventas_datos_empleados_idempleados` ASC) VISIBLE,
+  CONSTRAINT `fk_ventas_has_productos_ventas1`
+    FOREIGN KEY (`ventas_idventas` , `ventas_datos_empleados_idempleados`)
+    REFERENCES `mydb`.`ventas` (`idventas` , `datos_empleados_idempleados`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ventas_has_productos_productos1`
+    FOREIGN KEY (`productos_idproductos`)
+    REFERENCES `mydb`.`productos` (`idproductos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
