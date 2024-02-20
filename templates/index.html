@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="API_miguel-cedric\plantilla.css">
+    <title>Recambios Michel</title>
+</head>
+<body>
+    <h1>Recambios Michel </h1>
+        <div>
+            <h3>Empleados</h3>
+            <form action="/add_empleados" method="POST">
+                <input type="text" name= "nombre" placeholder="nombre">
+                <input type="text" name= "telefono" placeholder="telefono">
+                <input type="text" name= "correo" placeholder="correo">
+                <button type="sumit">
+                    guardar
+                </button>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>nombre<td>
+                            <td>telefono<td>
+                            <td>email<td>
+                            <td>operaciones<td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contactos in contactos%}
+                        <tr>
+                            <td>{{ contactos.1 }}</td>
+                        </tr>
+                        {%endfot%}
+                    </tbody>
+                </table>
+            </frorm> 
+        </div>
+    </a>
+</body>
+</html>
