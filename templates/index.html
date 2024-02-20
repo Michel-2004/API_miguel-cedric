@@ -6,36 +6,110 @@
     <title>Recambios Michel</title>
 </head>
 <body>
-    <h1>Recambios Michel </h1>
-        <div>
-            <h3>Empleados</h3>
-            <form action="/add_empleados" method="POST">
-                <input type="text" name= "nombre" placeholder="nombre">
-                <input type="text" name= "telefono" placeholder="telefono">
-                <input type="text" name= "correo" placeholder="correo">
-                <button type="sumit">
-                    guardar
-                </button>
+    <h1>Recambios Michel</h1>
+    <div>
+        <h3>Empleados</h3>
+        <form action="/add_empleados" method="POST">
+            <input type="text" name="id" placeholder="id">
+            <input type="text" name="nombre" placeholder="nombre">
+            <input type="text" name="telefono" placeholder="telefono">
+            <input type="text" name="correo" placeholder="correo">
+            <button type="submit">Guardar</button>
+        </form>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <td>nombre<td>
-                            <td>telefono<td>
-                            <td>email<td>
-                            <td>operaciones<td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for contactos in contactos%}
-                        <tr>
-                            <td>{{ contactos.1 }}</td>
-                        </tr>
-                        {%endfot%}
-                    </tbody>
-                </table>
-            </frorm> 
-        </div>
-    </a>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Nombre</th>
+                    <th>Telefono</th>
+                    <th>Email</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contacto in contactos %}
+                <tr>
+                    <td>{{ contacto[0] }}</td>
+                    <td>{{ contacto[1] }}</td>
+                    <td>{{ contacto[2] }}</td>
+                    <td>{{ contacto[3] }}</td>
+                    <td>Operaciones</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3>Articulos</h3>
+        <form action="/add_productos" method="POST">
+            <input type="text" name="idproducto" placeholder="idproducto">
+            <input type="text" name="articulo" placeholder="articulo">
+            <input type="text" name="cantidad" placeholder="cantidad">
+            <input type="text" name="precio" placeholder="precio">
+            <button type="submit">Guardar</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>idproducto</th>
+                    <th>articulo</th>
+                    <th>cantidad</th>
+                    <th>precio</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulos in articulos %}
+                <tr>
+                    <td>{{ articulos[0] }}</td>
+                    <td>{{ articulos[1] }}</td>
+                    <td>{{ articulos[2] }}</td>
+                    <td>{{ articulos[3] }}</td>
+                    <td>Operaciones</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3>Ventas</h3>
+        <form action="/add_productos" method="POST">
+            <input type="text" name="idventas" placeholder="idventas">
+            <input type="text" name="tipoventa" placeholder="tipoventa">
+            <input type="text" name="idempleados" placeholder="idempleados">
+            <input type="text" name="fecha" placeholder="fecha">
+            <input type="text" name="vproductos" placeholder="vproductos">
+            <button type="submit">Guardar</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>idventas</th>
+                    <th>tipoventa</th>
+                    <th>idempleados</th>
+                    <th>fecha</th>
+                    <th>productos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ventas in ventas %}
+                <tr>
+                    <td>{{ ventas[0] }}</td>
+                    <td>{{ ventas[1] }}</td>
+                    <td>{{ ventas[2] }}</td>
+                    <td>{{ ventas[3] }}</td>
+                    <td>{{ ventas[4] }}</td>
+                    <td>Operaciones</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
