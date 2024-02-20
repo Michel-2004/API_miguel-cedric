@@ -68,3 +68,32 @@ def add_ventas():
                     (idventas, tipoventa, idempleados, fecha, vproductos))
         mydb.commit()
         return redirect(url_for('Index'))
+    
+@app.route('/borrar_contacto/<string:id>')
+def borrar_contacto(id):
+    cur = mydb.cursor()
+    cur.execute('DELETE FROM datos_empleados WHERE idempleados = {0}'.format(id))
+    mydb.commit()
+    return redirect(url_for('Index'))
+
+@app.route('/borrar_articulos/<string:id>')
+def borrar_productos(id):
+    cur = mydb.cursor()
+    cur.execute('DELETE FROM productos WHERE idproductos = {0}'.format(id))
+    mydb.commit()
+    return redirect(url_for('Index'))
+
+@app.route('/borrar_ventas/<string:id>')
+def borrar_ventas(id):
+    cur = mydb.cursor()
+    cur.execute('DELETE FROM ventas WHERE idventas = {0}'.format(id))
+    mydb.commit()
+    return redirect(url_for('Index'))
+
+@app.route('/editar_contacto/<string:id>')
+def editar_contacto():
+    cur = mydb.cursor()
+    cur.execute('SElECT * FROM empleados WHERE idempleados = {0}'.format(id))
+    datose = cur.fetchall()
+    
+    return redirect(url_for('editar-empleados', empleado = datose[0]))

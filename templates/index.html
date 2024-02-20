@@ -34,7 +34,10 @@
                     <td>{{ contacto[1] }}</td>
                     <td>{{ contacto[2] }}</td>
                     <td>{{ contacto[3] }}</td>
-                    <td>Operaciones</td>
+                    <td>
+                        <a href="/editar_contacto/{{ contacto[0] }}">editar</a>
+                        <a href="/borrar_contacto/{{ contacto[0] }}">borrar</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -68,7 +71,10 @@
                     <td>{{ articulos[1] }}</td>
                     <td>{{ articulos[2] }}</td>
                     <td>{{ articulos[3] }}</td>
-                    <td>Operaciones</td>
+                    <td>
+                        <a href="/editar_articulos/{{ articulos[0] }}">editar</a>
+                        <a href="/borrar_articulos/{{ articulos[0] }}">borrar</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -77,7 +83,7 @@
 
     <div>
         <h3>Ventas</h3>
-        <form action="/add_productos" method="POST">
+        <form action="/add_ventas" method="POST">
             <input type="text" name="idventas" placeholder="idventas">
             <input type="text" name="tipoventa" placeholder="tipoventa">
             <input type="text" name="idempleados" placeholder="idempleados">
@@ -94,17 +100,21 @@
                     <th>idempleados</th>
                     <th>fecha</th>
                     <th>productos</th>
+                    <th>Operaciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for ventas in ventas %}
+                {% for venta in ventas %}
                 <tr>
-                    <td>{{ ventas[0] }}</td>
-                    <td>{{ ventas[1] }}</td>
-                    <td>{{ ventas[2] }}</td>
-                    <td>{{ ventas[3] }}</td>
-                    <td>{{ ventas[4] }}</td>
-                    <td>Operaciones</td>
+                    <td>{{ venta[0] }}</td>
+                    <td>{{ venta[1] }}</td>
+                    <td>{{ venta[2] }}</td>
+                    <td>{{ venta[3] }}</td>
+                    <td>{{ venta[4] }}</td>
+                    <td>
+                        <a href="/editar_ventas/{{ venta[0] }}">editar</a>
+                        <a href="/borrar_ventas/{{ venta[0] }}">borrar</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -113,3 +123,4 @@
 
 </body>
 </html>
+
